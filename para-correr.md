@@ -22,16 +22,16 @@ pip install torch numpy opencv-python scikit-learn matplotlib qiskit qiskit-aer 
 
 ### 3. Detalhe das Dependências 
 
-| Package | Files Used | Purpose |
+| Package | Ficheiros Usado | Objetivo |
 |---------|------------|---------|
-| `torch` | `quantum_model.py`, `train.py`, `evaluate.py` | PyTorch framework used to build the training pipeline and manage optimization gradients. |
-| `qiskit` | `frqi.py`, `quantum_model.py` | IBM's main quantum computing framework used to create quantum circuits and manipulate parameterized quantum gates. |
-| `qiskit-aer` | `quantum_model.py` | High-performance local C++ simulator (`AerSimulator`) used to accelerate quantum circuit execution during training and inference. |
-| `qiskit-machine-learning` | `quantum_model.py` | Provides native integration (`EstimatorQNN` and `TorchConnector`) between Qiskit and PyTorch. |
-| `opencv-python (cv2)` | `generator.py`, `utils.py` | Used to draw synthetic polyp ellipses and read/write grayscale PNG images. |
-| `numpy` | Global | Used for array manipulation, mathematical operations, flattening image data, and converting pixel vectors into rotation angles (radians). |
-| `scikit-learn` | `evaluate.py` | Used to compute standard evaluation metrics, including the confusion matrix, ROC curve, and AUC score. |
-| `matplotlib` | `evaluate.py` | Used to generate and save evaluation plots such as the confusion matrix and ROC curve. |
+| `torch` | `quantum_model.py`, `train.py`, `evaluate.py` | Framework PyTorch utilizado para construir o pipeline de treino e gerir os gradientes de otimização. |
+| `qiskit` | `frqi.py`, `quantum_model.py` | Framework principal de computação quântica da IBM, utilizado para criar circuitos quânticos e manipular portas quânticas parametrizadas. |
+| `qiskit-aer` | `quantum_model.py` | Simulador local de elevado desempenho em C++ (`AerSimulator`), utilizado para acelerar a execução de circuitos quânticos durante o treino e a inferência. |
+| `qiskit-machine-learning` | `quantum_model.py` | Fornece a integração nativa (`EstimatorQNN` e `TorchConnector`) entre o Qiskit e o PyTorch. |
+| `opencv-python (cv2)` | `generator.py`, `utils.py` | Utilizado para desenhar as elipses dos pólipos sintéticos e para ler e escrever imagens PNG em tons de cinzento. |
+| `numpy` | Global | Utilizado para manipulação de matrizes, operações matemáticas, achatamento dos dados das imagens e conversão dos vetores de píxeis em ângulos de rotação (radianos). |
+| `scikit-learn` | `evaluate.py` | Utilizado para calcular as métricas padrão de avaliação, incluindo a matriz de confusão, a curva ROC e a métrica AUC. |
+| `matplotlib` | `evaluate.py` | Utilizado para gerar e guardar os gráficos de avaliação, como a matriz de confusão e a curva ROC. |
 
 ## Fluxo
 
