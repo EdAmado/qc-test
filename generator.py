@@ -19,7 +19,7 @@ class SyntheticDatasetGenerator:
         train_samples=40,
         test_samples=10,
         output_dir="dataset",
-        random_seed=42,
+        random_seed=12,
     ):
 
         self.image_size = image_size
@@ -48,9 +48,7 @@ class SyntheticDatasetGenerator:
             for c in range(self.image_size):
 
                 while True:
-
                     value = random.randint(0, 180)
-
                     valid = True
 
                     if r > 0:
@@ -64,7 +62,6 @@ class SyntheticDatasetGenerator:
                     if valid:
                         img[r, c] = value
                         break
-
         return img
 
     # -------------------------------------------------------------
@@ -72,16 +69,13 @@ class SyntheticDatasetGenerator:
     def generate_polyp(self, image):
         """
         Draw a random ellipse representing a polyp.
-
         Returns
         -------
         image
         """
 
         img = image.copy()
-
         colour = random.randint(181, 255)
-
         centre = (
             random.randint(1, self.image_size - 2),
             random.randint(1, self.image_size - 2),
@@ -89,7 +83,6 @@ class SyntheticDatasetGenerator:
 
         axis_x = random.randint(1, max(1, self.image_size // 4))
         axis_y = random.randint(1, max(1, self.image_size // 4))
-
         angle = random.randint(0, 180)
 
         cv2.ellipse(
@@ -102,7 +95,6 @@ class SyntheticDatasetGenerator:
             int(colour),
             -1,
         )
-
         return img
 
     # -------------------------------------------------------------
@@ -117,21 +109,18 @@ class SyntheticDatasetGenerator:
         for r in range(rows):
             for c in range(cols):
                 current = image[r, c]
-
                 # Check pixel below
                 if r + 1 < rows:
                     neighbor = image[r + 1, c]
                     # Only fail if they match AND at least one of them is background
                     if current == neighbor and (current <= 180 or neighbor <= 180):
                         return False
-
                 # Check pixel to the right
                 if c + 1 < cols:
                     neighbor = image[r, c + 1]
                     # Only fail if they match AND at least one of them is background
                     if current == neighbor and (current <= 180 or neighbor <= 180):
                         return False
-
         return True
 
     # -------------------------------------------------------------
@@ -142,25 +131,19 @@ class SyntheticDatasetGenerator:
         """
 
         while True:
-
             img = self.generate_background()
-
             if has_polyp:
                 img = self.generate_polyp(img)
-
             if self.validate_image(img):
                 break
 
         label = 1 if has_polyp else 0
-
         return img, label
 
     # -------------------------------------------------------------
 
     def save_image(self, image, folder, filename):
-
         folder.mkdir(parents=True, exist_ok=True)
-
         cv2.imwrite(
             str(folder / filename),
             image,
@@ -169,10 +152,8 @@ class SyntheticDatasetGenerator:
     # -------------------------------------------------------------
 
     def generate_split(self, split_name, samples):
-
         positive = samples // 2
         negative = samples // 2
-
         positive_folder = (
             self.output_dir
             / split_name
@@ -188,9 +169,7 @@ class SyntheticDatasetGenerator:
         print(f"\nGenerating {split_name} dataset...")
 
         for i in range(positive):
-
             img, _ = self.generate_sample(True)
-
             self.save_image(
                 img,
                 positive_folder,
@@ -198,9 +177,7 @@ class SyntheticDatasetGenerator:
             )
 
         for i in range(negative):
-
             img, _ = self.generate_sample(False)
-
             self.save_image(
                 img,
                 negative_folder,
@@ -210,28 +187,20 @@ class SyntheticDatasetGenerator:
     # -------------------------------------------------------------
 
     def generate(self):
-
         self.generate_split(
             "train",
             self.train_samples,
         )
-
         self.generate_split(
             "test",
             self.test_samples,
         )
-
         print("\nDataset generation complete.")
 
 
 # ----------------------------------------------------------------
 
 if __name__ == "__main__":
-
-    generator = SyntheticDatasetGenerator(
-        image_size=4,
-        train_samples=500,
-        test_samples=100,
-    )
+    generator = SyntheticDatasetGenerator()
 
     generator.generate()
