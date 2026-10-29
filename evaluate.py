@@ -150,7 +150,7 @@ if __name__ == "__main__":
     test_loader = DataLoader(TensorDataset(X_test, y_test), batch_size=16, shuffle=False)
     
     # Rebuild dynamic model architecture skeleton
-    model = DynamicHybridQNN(image_size=4, reps=2, encoding=args.encoding)
+    model = DynamicHybridQNN(image_size=8, reps=2, encoding=args.encoding)
     model.load_state_dict(torch.load(f"results/models/quantum_polyp_model_{args.encoding}.pt"))
     
     # Run structural assessment and inferences

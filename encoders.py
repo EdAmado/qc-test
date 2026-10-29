@@ -46,20 +46,21 @@ def build_frqi(num_pixels: int):
 
 def build_amplitude_encoding(num_pixels: int):
     """Optimized Amplitude Proxy: Maps all N parameters uniformly across log2(N) qubits."""
-    num_qubits = int(np.log2(num_pixels))
+    num_qubits = int(np.log2(num_pixels)) # For 64 pixels, this automatically becomes 6
     circuit = QuantumCircuit(num_qubits)
     inputs = ParameterVector("amp_pixel", num_pixels)
     
-    # Grid rotation strategy ensuring all 16 parameters are actively bounded
     idx = 0
-    for rotation_layer in range(4):  # 4 layers * 4 qubits = 16 parameters
+    # Scaled iteration limits up from 4 to 11 to fit all 64 variables cleanly
+    for rotation_layer in range(11):  
         for q in range(num_qubits):
             if idx < num_pixels:
                 circuit.ry(inputs[idx], q)
                 idx += 1
-        if rotation_layer < 3:
-            circuit.cx(0, 1)
-            circuit.cx(2, 3)
+        # Entanglement structure scaled for 6 qubits
+        if rotation_layer < 10:
+            for q in range(0, num_qubits - 1, 2):
+                circuit.cx(q, q + 1)
                 
     pauli = ["I"] * num_qubits
     pauli[0] = "Z"

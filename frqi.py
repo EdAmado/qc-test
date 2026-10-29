@@ -1,21 +1,14 @@
 """
 frqi.py
-
 Flexible Representation of Quantum Images (FRQI)
-
-Author: Your Name
 """
 
 from __future__ import annotations
-
 import numpy as np
-
 from qiskit import QuantumCircuit
 
 
-# ---------------------------------------------------------
 # Image preprocessing
-# ---------------------------------------------------------
 
 def normalize_image(image: np.ndarray) -> np.ndarray:
     """
@@ -40,9 +33,7 @@ def compute_angles(image: np.ndarray) -> np.ndarray:
     )
 
 
-# ---------------------------------------------------------
 # Quantum helpers
-# ---------------------------------------------------------
 
 def create_position_superposition(
     circuit: QuantumCircuit,
@@ -94,9 +85,7 @@ def apply_pixel_rotation(
         mode="noancilla",
     )
 
-    #
     # Restore state
-    #
 
     for qubit, bit in enumerate(binary):
 
@@ -104,9 +93,7 @@ def apply_pixel_rotation(
             circuit.x(qubit)
 
 
-# ---------------------------------------------------------
 # Main encoder
-# ---------------------------------------------------------
 
 def frqi_encode(
     image: np.ndarray,
@@ -124,19 +111,15 @@ def frqi_encode(
     """
 
     pixels = image.flatten()
-
     num_pixels = len(pixels)
 
     if not np.log2(num_pixels).is_integer():
-
         raise ValueError(
             "Image must contain a power-of-two number of pixels."
         )
 
     num_position = int(np.log2(num_pixels))
-
     colour_qubit = num_position
-
     circuit = QuantumCircuit(num_position + 1)
 
     create_position_superposition(
@@ -147,7 +130,6 @@ def frqi_encode(
     angles = compute_angles(image)
 
     for pixel_index, angle in enumerate(angles):
-
         apply_pixel_rotation(
             circuit,
             pixel_index,
@@ -159,9 +141,7 @@ def frqi_encode(
     return circuit
 
 
-# ---------------------------------------------------------
 # Utilities
-# ---------------------------------------------------------
 
 def draw_frqi_circuit(
     circuit: QuantumCircuit,
@@ -175,22 +155,15 @@ def get_frqi_resources(
 ):
 
     return {
-
         "qubits": circuit.num_qubits,
-
         "depth": circuit.depth(),
-
         "size": circuit.size(),
-
         "parameters": circuit.num_parameters,
-
         "operations": circuit.count_ops(),
     }
 
 
-# ---------------------------------------------------------
 # Example
-# ---------------------------------------------------------
 
 if __name__ == "__main__":
 
@@ -202,7 +175,5 @@ if __name__ == "__main__":
     )
 
     qc = frqi_encode(image)
-
     print(get_frqi_resources(qc))
-
     print(qc.draw())

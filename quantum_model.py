@@ -2,7 +2,6 @@
 quantum_model.py (Refactored for Modular Encodings)
 """
 
-import torch
 import torch.nn as nn
 from qiskit import QuantumCircuit
 from qiskit.circuit.library import RealAmplitudes

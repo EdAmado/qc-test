@@ -40,7 +40,7 @@ def train():
     )
     args = parser.parse_args()
 
-    set_seed(42)
+    set_seed(22)
     create_directories()
     
     print(f"Initializing dataset loading using configuration space: [Encoding: {args.encoding.upper()}]")
@@ -52,7 +52,7 @@ def train():
     train_loader = DataLoader(dataset, batch_size=64, shuffle=True)
     
     # Initialize dynamic model passing custom encoding option parameter
-    model = DynamicHybridQNN(image_size=4, reps=2, encoding=args.encoding)
+    model = DynamicHybridQNN(image_size=8, reps=2, encoding=args.encoding)
     
     criterion = nn.MSELoss() 
     optimizer = optim.Adam(model.parameters(), lr=0.05)
